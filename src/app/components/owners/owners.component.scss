@@ -1,0 +1,78 @@
+$dark-color: rgb(68, 64, 64);
+$light-color: rgb(194, 203, 206);
+$success-color: rgb(33, 146, 33);
+$danger-color: rgba(221, 12, 12, 0.863);
+
+
+.container {
+    padding: 20px;
+}
+
+.visibleContent {
+    opacity: 0.3;
+}
+
+.active {
+    background: $success-color;
+}
+
+td {
+    cursor: pointer;
+}
+
+
+.button-wrapper {
+
+
+    button {
+        margin-right: 10px;
+    }
+
+    .first-btn {
+        margin-right: 100px;
+    }
+}
+
+.notification-wrapper {
+    position: relative;
+
+    .card {
+        width: 300px;
+        padding: 20px;
+        position: fixed;
+        top: 40%;
+        left: 40%;
+        text-align: center;
+
+        button {
+            margin-top: 10px;
+        }
+    }
+}
+
+input {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.danger {
+    color: $danger-color;
+    font-size: 12px;
+}
+
+.hidden {
+    display: none;
+}
+
+.num-notif-wrap {
+    width: 100%;
+    text-align: center;
+    position: relative;
+
+    small{
+        position: absolute;
+        top: -252px;
+        left: 0;
+        font-size: 13px;
+    }
+}

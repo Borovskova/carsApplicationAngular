@@ -1,0 +1,114 @@
+<div class="container" [ngClass]="{'visibleContent': isNotificationVisible}">
+  <div class="row">
+    <div class="col">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Отчество</th>
+            <th scope="col">Количество автомобилей</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let owner of owners; let i = index;" (click)="onRowClick(owner)"
+            [ngClass]="{'active': ownerActive.id === owner.id}">
+            <td>{{owner.lastName}}</td>
+            <td>{{owner.firstName}}</td>
+            <td>{{owner.middleName}}</td>
+            <td>{{owner.carsList.length}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card-body form-wrapper" *ngIf="isAddFormVissible">
+        <form [formGroup]="ownerForm" novalidate (ngSubmit)="submit()">
+          <div class="form-group">
+            <input class="form-control" name="name" formControlName="lastName" placeholder="Укажите фамилию" />
+
+            <div class="danger"
+              *ngIf="ownerForm.controls['lastName'].invalid && ownerForm.controls['lastName'].touched">
+              Не указана фамилия
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control" name="name" formControlName="firstName" placeholder="Укажите имя" />
+
+            <div class="danger"
+              *ngIf="ownerForm.controls['firstName'].invalid && ownerForm.controls['firstName'].touched">
+              Не указано имя
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control" name="name" formControlName="middleName" placeholder="Укажите отчество" />
+
+            <div class="danger"
+              *ngIf="ownerForm.controls['middleName'].invalid && ownerForm.controls['middleName'].touched">
+              Не указано отчество
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control" name="name" formControlName="carNumber"
+              placeholder="Укажите гос номер автомобиля"
+              (input)="ownerCarNumberValidator(ownerForm.controls['carNumber'].value)" />
+
+            <div class="danger"
+              *ngIf="ownerForm.controls['carNumber'].invalid && ownerForm.controls['carNumber'].touched">
+              Не указан гос номер
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control" name="name" formControlName="brandCar" placeholder="Укажите маркy автомобиля" />
+
+            <div class="danger"
+              *ngIf="ownerForm.controls['brandCar'].invalid && ownerForm.controls['brandCar'].touched">
+              Не указана марка автомобиля
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control" name="name" formControlName="modelCar"
+              placeholder="Укажите модель автомобиля" />
+
+            <div class="danger"
+              *ngIf="ownerForm.controls['modelCar'].invalid && ownerForm.controls['modelCar'].touched">
+              Не указана модель автомобиля
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control" name="name" formControlName="yearCar" placeholder="Укажите  год автомобиля" />
+
+            <div class="danger" *ngIf="ownerForm.controls['yearCar'].invalid && ownerForm.controls['yearCar'].touched">
+              Не указан год выпуска автомобиля
+            </div>
+          </div>
+          <div class="form-group">
+            <button class="material-icons btn btn-primary" [disabled]="ownerForm.invalid || isBtnSubmitDisabled">save
+              Сохранить</button>
+          </div>
+        </form>
+        <div class="num-notif-wrap">
+          <small [ngClass]="{'hidden': !isNumNotificationVisible}"
+            class="danger num-notif">{{carNumberUnregisterNotification}}</small>
+        </div>
+      </div>
+      <div class="button-wrapper">
+        <button class="btn btn-outline-primary first-btn" (click)="addNewOwner()">Добавить</button>
+        <button class="btn btn-outline-primary" [disabled]="isBtnDisabled"
+          (click)="onInfoButtonClick(ownerActive, 'look-btn')">Просмотр</button>
+        <button class="btn btn-outline-primary" [disabled]="isBtnDisabled"
+          (click)="onInfoButtonClick(ownerActive, 'edit-btn')">Редактировать</button>
+        <button class="btn btn-outline-primary" [disabled]="isBtnDisabled"
+          (click)="removeOwner(ownerActive)">Удалить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="notification-wrapper" *ngIf="isNotificationVisible">
+  <div class="card">
+    <div class="card-body">
+      <h5>Пользователь {{ownerActive.lastName + ' ' + ownerActive.firstName }} успешно удален</h5>
+      <button href="#" class="btn btn-primary" (click)="onNotificationOk()">ОК</button>
+    </div>
+  </div>
+</div>

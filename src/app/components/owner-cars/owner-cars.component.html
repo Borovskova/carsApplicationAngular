@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="row">
+    <div class="card">
+      <div class="card-body ">
+        <ul class="list-group list-group-flush">
+          <div>
+            <span>Фамилия</span>
+            <li class="list-group-item">{{owner.lastName}}</li>
+          </div>
+          <div>
+            <span>Имя</span>
+            <li class="list-group-item">{{owner.firstName}}</li>
+          </div>
+          <div>
+            <span>Отчество</span>
+            <li class="list-group-item">{{owner.middleName}}</li>
+          </div>
+        </ul>
+        <h1 class="card-title">Автомобили</h1>
+      </div>
+      <div class=" card-body  name-of-column">
+        <label>Hомер</label>
+        <label>Марка</label>
+        <label>Модель</label>
+        <label>Год</label>
+      </div>
+
+      <div class="card-body " *ngFor="let car of owner.carsList; let i = index;">
+        <ul class="list-group list-group-flush cars-in-base">
+          <li class="list-group-item">{{car.carNumber}}</li>
+          <li class="list-group-item">{{car.brandCar}}</li>
+          <li class="list-group-item">{{car.modelCar}}</li>
+          <li class="list-group-item">{{car.yearCar}}</li>
+          <button *ngIf="isEditBtnsVissible" class="material-icons btn btn-danger" (click)="remove(car)">delete</button>
+        </ul>
+      </div>
+
+      <div class="card-body form-wrapper" *ngIf="isAddFormVissible">
+        <form [formGroup]="carsForm" novalidate (ngSubmit)="submit()">
+          <div class="form-group">
+            <input class="form-control" name="name" formControlName="carNumber" placeholder="Укажите гос номер"
+              (input)="ownerCarNumberValidator(carsForm.controls['carNumber'].value)" />
+
+            <div class="danger"
+              *ngIf="carsForm.controls['carNumber'].invalid && carsForm.controls['carNumber'].touched">
+              Не указан гос номер
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control" name="name" formControlName="brandCar" placeholder="Укажите маркy" />
+
+            <div class="danger" *ngIf="carsForm.controls['brandCar'].invalid && carsForm.controls['brandCar'].touched">
+              Не указана марка автомобиля
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control" name="name" formControlName="modelCar" placeholder="Укажите модель" />
+
+            <div class="danger" *ngIf="carsForm.controls['modelCar'].invalid && carsForm.controls['modelCar'].touched">
+              Не указана модель автомобиля
+            </div>
+          </div>
+          <div class="form-group">
+            <input class="form-control" name="name" formControlName="yearCar" placeholder="Укажите  год" />
+
+            <div class="danger" *ngIf="carsForm.controls['yearCar'].invalid && carsForm.controls['yearCar'].touched">
+              Не указан год выпуска автомобиля
+            </div>
+          </div>
+          <div class="form-group">
+            <button class="material-icons btn btn-primary" [disabled]="carsForm.invalid || isBtnSubmitDisabled">save
+              Сохранить</button>
+          </div>
+        </form>
+        <div style="width:100%; text-align: center;">
+          <small [ngClass]="{'hidden': !isNumNotificationVisible}"
+            class="danger num-notif">{{carNumberUnregisterNotification}}</small>
+        </div>
+      </div>
+      <div class="btn-wrap">
+        <button *ngIf="isEditBtnsVissible" class="material-icons btn btn-primary add-button" (click)="add()">add
+          Добавить</button>
+        <button class="material-icons btn btn-secondary  back-button" (click)="goBack()">arrow_left Назад</button>
+      </div>
+    </div>
+  </div>
+</div>

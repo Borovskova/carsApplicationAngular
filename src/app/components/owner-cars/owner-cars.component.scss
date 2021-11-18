@@ -1,0 +1,55 @@
+form {
+    display: flex;
+    justify-content: space-around;
+}
+
+.cars-in-base {
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+li {
+    min-width: 180px;
+    text-align: center;
+}
+
+.name-of-column {
+    display: flex;
+    justify-content: space-around;
+}
+
+label {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.card-title {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-wrap {
+    display: flex;
+    padding: 30px;
+}
+
+.add-button,
+.back-button {
+    max-width: 150px;
+    padding: 10px;
+    margin-left: 20px;
+}
+
+.danger {
+    color: red;
+}
+
+.hidden {
+    display: none;
+}
+
+.num-notif {
+   margin-top: 20px;
+   font-size: 20px;
+}
