@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Owner, OwnersDataService } from 'src/app/services/owners-data.service';
+import { Car, Owner, OwnersDataService } from 'src/app/services/owners-data.service';
 
 @Component({
   selector: 'app-owners',
@@ -35,7 +35,6 @@ export class OwnersComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOwners()
-
   }
 
   public getOwners() {
@@ -78,8 +77,8 @@ export class OwnersComponent implements OnInit {
     let newCarsList: any = [];
     let allOwnersData: any = [];
     let ownersName: any = [];
-    let newCar;
-    let newOwner
+    let newCar: Car;
+    let newOwner:Owner;
 
     allOwnersData.push(this.ownerForm.value);
     allOwnersData.forEach((item: any) => {

@@ -7,8 +7,13 @@ export interface Owner {
   lastName: string,
   firstName: string,
   middleName: string,
-  carsQuantity: string,
   carsList: []
+}
+export interface Car {
+  carNumber: string,
+  brandCar: string,
+  modelCar: string,
+  yearCar: string,
 }
 @Injectable({
   providedIn: 'root'
@@ -16,8 +21,8 @@ export interface Owner {
 
 export class OwnersDataService {
 
-  private url:any = "https://api.npoint.io/d36fcd2f41d44c8fb369";
-  
+  private url: any = "https://api.npoint.io/d36fcd2f41d44c8fb369";
+
   constructor(private http: HttpClient) { }
 
 
