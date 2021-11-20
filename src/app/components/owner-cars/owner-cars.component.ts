@@ -15,11 +15,11 @@ import { Owner, OwnersDataService } from 'src/app/services/owners-data.service';
 export class OwnerCarsComponent implements OnInit {
 
   public carsForm: FormGroup;
-  public owners: any = [];
+  public owners: any = this.ownersDataService.owners;
   public id: any;
   private routeSubscription: Subscription;
   private querySubscription: Subscription;
-  public owner: any = {};
+  public owner: any = this.ownersDataService.newOwner;
   public isAddFormVissible: boolean = false;
   public carNumberUnregisterNotification: any;
   public btnClicked: any;
@@ -37,12 +37,6 @@ export class OwnerCarsComponent implements OnInit {
     this.querySubscription = route.queryParams.subscribe(
       (queryParam: any) => {
         this.btnClicked = queryParam.btn;
-        this.newOwner = {
-          id: queryParam.id, lastName: queryParam.lN, firstName: queryParam.fN, middleName: queryParam.mN,
-          carsList: [
-            { carNumber: queryParam.cN, brandCar: queryParam.bC, modelCar: queryParam.mC, yearCar: queryParam.yC }
-          ]
-        }
       }
 
 
@@ -58,23 +52,10 @@ export class OwnerCarsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getOwnersInformation()
     this.btnClicked === 'edit-btn' ? this.isEditBtnsVissible = true : this.isEditBtnsVissible = false
-  }
-
-  public getOwnersInformation() {
-    this.ownersDataService.getOwnersUrl()
-      .subscribe(
-        response => {
-          let owners: Owner = response.carOwners;
-          this.owners = owners;
-          this.owners.push(this.newOwner)
-          this.owner = this.owners.find((item: any) => item.id == this.id);
-        },
-        error => {
-          console.log(error)
-        }
-      )
+    this.newOwner = this.ownersDataService.newOwner;
+    this.owners.push(this.newOwner)
+    this.owner = this.owners.find((item: any) => item.id == this.id);
   }
 
   public submit() {

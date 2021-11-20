@@ -9,14 +9,13 @@ import { Car, Owner, OwnersDataService } from 'src/app/services/owners-data.serv
   styleUrls: ['./owners.component.scss']
 })
 export class OwnersComponent implements OnInit {
-  public owners: any = [];
   public ownerActive: any = {};
   public isBtnDisabled: boolean = true;
   public isNotificationVisible: boolean = false;
   public isAddFormVissible: boolean = false;
   public ownerForm: FormGroup;
   public carNumberUnregisterNotification: any;
-  public isNumNotificationVisible:boolean = false;
+  public isNumNotificationVisible: boolean = false;
   public registerOwnerNumber: any;
   public isBtnSubmitDisabled: boolean = true;
 
@@ -34,19 +33,20 @@ export class OwnersComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getOwners()
+    this.ownersDataService.getOwners()
   }
 
-  public getOwners() {
-    this.ownersDataService.getOwnersUrl()
+
+  public postNewOwner() {
+    let newOwner = this.createNewOwner();
+    this.ownersDataService.postNewOwnerData(newOwner)
       .subscribe(
-        response => {
-          let owners: Owner = response.carOwners;
-          this.owners = owners;
-          console.log(this.owners);
-        },
-        error => {
-          console.log(error)
+        data => console.log('success' + data),
+        (err: any) => {
+          this.ownersDataService.newOwner = newOwner;
+          this.ownersDataService.owners.push(newOwner)
+          this.isAddFormVissible = false;
+          console.log('error' + err);
         }
       )
   }
@@ -57,28 +57,26 @@ export class OwnersComponent implements OnInit {
   public onInfoButtonClick(owner: any, btn: string) {
     this.router.navigate(['/owners-information', owner.id], {
       queryParams: {
-        btn: btn,
-        id: owner.id, lN: owner.lastName, fN: owner.firstName, mN: owner.middleName, cN: owner.carsList[0].carNumber,
-        bC: owner.carsList[0].brandCar, mC: owner.carsList[0].modelCar, yC: owner.carsList[0].modelCar
+        btn: btn
       }
     })
   }
 
   public removeOwner(owner: any) {
-    let ownerForRemove = this.owners.findIndex((item: any) => item.id == owner.id);
-    this.owners.splice(ownerForRemove, 1);
+    let ownerForRemove = this.ownersDataService.owners.findIndex((item: any) => item.id == owner.id);
+    this.ownersDataService.owners.splice(ownerForRemove, 1);
     this.isNotificationVisible = true;
   }
 
   public onNotificationOk() {
     this.isNotificationVisible = false;
   }
-  public submit() {
+  public createNewOwner() {
     let newCarsList: any = [];
     let allOwnersData: any = [];
     let ownersName: any = [];
     let newCar: Car;
-    let newOwner:Owner;
+    let newOwner: Owner;
 
     allOwnersData.push(this.ownerForm.value);
     allOwnersData.forEach((item: any) => {
@@ -89,16 +87,15 @@ export class OwnersComponent implements OnInit {
       ownersName.push(item.lastName, item.firstName, item.middleName,)
     })
     newOwner = {
-      id: this.owners.length + 1, carsList: newCarsList, lastName: ownersName[0], firstName: ownersName[1], middleName: ownersName[2]
+      id: this.ownersDataService.owners.length + 1, carsList: newCarsList, lastName: ownersName[0], firstName: ownersName[1], middleName: ownersName[2]
     };
-    this.owners.push(newOwner)
-    this.isAddFormVissible = false;
+    return newOwner;
   }
   public addNewOwner() {
     this.isAddFormVissible = true;
   }
   public ownerCarNumberValidator(control: any) {
-    this.owners.find((item: any) => {
+    this.ownersDataService.owners.find((item: any) => {
       item.carsList.forEach((number: any) => {
         if (number.carNumber === control) {
           this.registerOwnerNumber = number.carNumber;

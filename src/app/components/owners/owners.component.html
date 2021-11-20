@@ -11,7 +11,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let owner of owners; let i = index;" (click)="onRowClick(owner)"
+          <tr *ngFor="let owner of ownersDataService.owners; let i = index;" (click)="onRowClick(owner)"
             [ngClass]="{'active': ownerActive.id === owner.id}">
             <td>{{owner.lastName}}</td>
             <td>{{owner.firstName}}</td>
@@ -22,7 +22,7 @@
       </table>
 
       <div class="card-body form-wrapper" *ngIf="isAddFormVissible">
-        <form [formGroup]="ownerForm" novalidate (ngSubmit)="submit()">
+        <form [formGroup]="ownerForm" novalidate (ngSubmit)="postNewOwner()">
           <div class="form-group">
             <input class="form-control" name="name" formControlName="lastName" placeholder="Укажите фамилию" />
 
