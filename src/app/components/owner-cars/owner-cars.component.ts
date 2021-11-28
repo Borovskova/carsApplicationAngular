@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Owner, OwnersDataService } from 'src/app/services/owners-data.service';
+import { OwnersDataService } from 'src/app/services/owners-data.service';
 
 
 
