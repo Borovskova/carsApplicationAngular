@@ -45,8 +45,9 @@ export class OwnersComponent implements OnInit {
         (err: any) => {
           this.ownersDataService.newOwner = newOwner;
           this.ownersDataService.owners.push(newOwner)
+          this.ownerForm.reset()
           this.isAddFormVissible = false;
-          console.log('error' + err);
+          console.log('error ' + err);
         }
       )
   }

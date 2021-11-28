@@ -60,6 +60,7 @@ export class OwnerCarsComponent implements OnInit {
 
   public submit() {
     this.owner.carsList.push(this.carsForm.value)
+    this.carsForm.reset()
   }
   public goBack() {
     this.router.navigate(['owners']);
